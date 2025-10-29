@@ -1,0 +1,5 @@
+const db_config={
+   DB_URL:process.env.DB_URL
+}
+
+export {db_config}
