@@ -1,7 +1,5 @@
 //step1:firebase configuration 
 
-
-
 export const firebaseAdmin = {
   type: process.env.TYPE,
   project_id: process.env.PROJECT_ID,

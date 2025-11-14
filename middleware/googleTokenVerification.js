@@ -1,7 +1,7 @@
 //step1:copy the keys of firebase from firebase inside the utils/firebaseAdmin
 //step2:middleware for google token verification coming from frontend 
 
-import admin from "firebase-admin"    // instal this
+import admin from "firebase-admin"    // install this
 import { firebaseAdmin } from "../utils/firebaseAdmin"   // import from utils
 
 

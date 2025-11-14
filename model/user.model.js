@@ -23,9 +23,12 @@ const userSchema = new mongoose.Schema(
 
 
    },
+   //password is not required when google signUp is there 
    password:{
-    type:String,
-    required: [true, "Password is required"],
+   type:String,
+   required: function () {
+    return !this.isGoogleUser; 
+  },
    validate: {
       validator: function (v) {
         return validator.isStrongPassword(v, {
@@ -39,8 +42,26 @@ const userSchema = new mongoose.Schema(
       message:"Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character.",
     },
 },
+
+
+
+   googleId: {
+      type: String,
+      unique: true,
+    
+    },
+
+    isGoogleUser: {
+      type: Boolean,
+      default: false,
+    },
+
+    emailVerified: {
+      type: Boolean,
+      default: false,
+    },
    
-   profileImage:{
+    profileImage:{
     type:String,
 
    },
@@ -51,11 +72,11 @@ const userSchema = new mongoose.Schema(
 },
 {
     timestamps: true, 
-  }
+}
 )
 
 userSchema.pre('save',async function (next) {
-    if(!this.isModified("password")) return next
+    if(!this.isModified("password") || this.isGoogleUser) return next
     const salt= await bcrypt.genSalt(10)
     this.password= await bcrypt.hash(this.password,salt)
     next()
