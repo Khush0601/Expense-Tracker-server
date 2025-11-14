@@ -1,5 +1,7 @@
 import User from "../model/user.model.js";
 import bcrypt from "bcrypt"
+import generateToken from "../utils/jwt.js";
+
 export const signUp=async(req,res,next)=>{
    try{
     const {name,email,password}=req.body
@@ -34,19 +36,36 @@ export const signIn=async(req,res,next)=>{
    }
 
    const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+   
    if(!isPasswordCorrect){
      return res.status(401).json('Invalid credentials');
    }
+   const token = generateToken(user._id)
+   const { password: userPassword, ...userData } = user._doc;
    res.status(200).json({
     message:'Login successfully',
-    user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      }
+    token, 
+    user:userData
    });
  }
  catch(error){
     next(error)
  }
 }
+
+
+export const autoLogin = async (req, res,next) => {
+  try {
+    
+    const user = await User.findById(req.userId).select("-password");
+    
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+  
+    res.status(200).send({ user });
+  } catch (err) {
+    console.error(err);
+    next(err)
+  }
+};
