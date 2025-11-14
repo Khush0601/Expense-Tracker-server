@@ -1,6 +1,8 @@
 import express from 'express'
 import { appConfig } from './config/app_config'
 import { db_config } from './config/db_config'
+import dotenv from "dotenv";
+dotenv.config();
 import mongoose from 'mongoose'
 import cors from 'cors'
 import {errorHandler} from './middleware/error.middleware.js';

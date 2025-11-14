@@ -69,3 +69,5 @@ export const autoLogin = async (req, res,next) => {
     next(err)
   }
 };
+
+

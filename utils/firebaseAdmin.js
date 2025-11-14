@@ -1,7 +1,6 @@
 //step1:firebase configuration 
 
-import dotenv from "dotenv";
-dotenv.config();
+
 
 export const firebaseAdmin = {
   type: process.env.TYPE,
