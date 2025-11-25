@@ -4,7 +4,7 @@ import generateToken from "../utils/jwt.js";
 
 import crypto from "crypto"
 
-
+// signUp controller
 export const signUp=async(req,res,next)=>{
    try{
     const {name,email,password}=req.body
@@ -28,6 +28,7 @@ export const signUp=async(req,res,next)=>{
    }
 }
 
+// Signin Controller
 export const signIn=async(req,res,next)=>{
  try{
    const {email,password}=req.body;
@@ -112,6 +113,8 @@ export const googleLogin=async(req,res)=>{
      }
 }
 
+// autologin using token
+
 export const autoLogin = async (req, res,next) => {
   try {
     
@@ -128,6 +131,48 @@ export const autoLogin = async (req, res,next) => {
   }
 };
 
-// export const googleSignUp=async(req,res,next)=>{
+// update UserDetais:
+export const updateUserDetails=async(req,res)=>{
+  try{
+    const { userId } = req.params;  
+    const userDetails = req.body;
+    
+    if (!userId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "User ID is required" 
+      });
+    }
 
-// }
+    // Update user
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: userDetails },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+     res.status(200).json({
+      success: true,
+      message: "User details updated successfully",
+      data: updatedUser
+    });
+
+
+  }
+  catch(err){
+  res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message
+    });
+  }
+
+}
+

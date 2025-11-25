@@ -1,5 +1,7 @@
 import Transaction from "../model/transaction.model.js";
 
+// create Transaction
+
 export const createTransaction=async(req,res)=>{
   try{
      const { userId, totalAmount, categories } = req.body;
@@ -79,4 +81,3 @@ export const getTransaction = async (req, res) => {
 };
 
 
-// 
