@@ -128,6 +128,6 @@ export const autoLogin = async (req, res,next) => {
   }
 };
 
-export const googleSignUp=async(req,res,next)=>{
+// export const googleSignUp=async(req,res,next)=>{
 
-}
+// }

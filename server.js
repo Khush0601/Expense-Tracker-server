@@ -8,11 +8,12 @@ import cors from 'cors'
 import {errorHandler} from './middleware/error.middleware.js';
 
 import userRoutes from './routes/user.routes.js'
-
+import transactionRoutes from "./routes/transaction.routes.js"
 const app=express()
 app.use(express.json());
 app.use(cors())
 app.use("/expenseTracker/api/v1/user", userRoutes);
+app.use("/expenseTracker/api/v1/transaction",transactionRoutes)
 
 
 
